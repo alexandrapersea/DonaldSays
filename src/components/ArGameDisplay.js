@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FontIcon from 'react-native-vector-icons/FontAwesome';
 
 import Camera from 'react-native-camera';
+//import Sound from 'react-native-sound';
 
 import { Gyroscope } from 'NativeModules';
 
@@ -19,8 +20,9 @@ import Dimensions from 'Dimensions';
 
 import Base from './Base';
 import Button from './Button';
+import FireLaserButton from './FireLaserButton';
 
-import { mixins, colors, variables } from '../styles';
+import { buttons, mixins, colors, variables } from '../styles';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -28,7 +30,7 @@ const width = Dimensions.get('window').width;
 class ArGameDisplay extends Base {
     constructor(props) {
         super(props);
-        this.autoBind('handleStop', 'handleStart');
+        this.autoBind('handleFire', 'handleStop', 'handleStart');
         this.state = {
             x: 0,
             y: 0,
@@ -54,6 +56,9 @@ class ArGameDisplay extends Base {
     }
     componentWillUnmount() {
         Gyroscope.stopGyroUpdates();
+    }
+    handleFire() {
+      console.log(this.state);
     }
     handleStop() {
         Gyroscope.stopGyroUpdates();
@@ -91,22 +96,14 @@ class ArGameDisplay extends Base {
                             style={styles.arTarget}
                         />
 
+                        <FireLaserButton />
+
                         <FontIcon
                             name='crosshairs'
                             size={24}
                             style={styles.crosshairs}
                             color='#fff'
                         />
-
-                        {this.state.gyro ?
-                            <Button
-                                style={styles.button}
-                                onPress={this.handleStop}>Stop</Button>
-                            :
-                            <Button
-                                style={styles.button}
-                                onPress={this.handleStart}>Start</Button>
-                        }
                     </View>
                 </Camera>
 
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
     arDisplay: {
         position: 'absolute',
         top: 0,
-        left: 0
+        flex: 1,
     },
     arTarget: {
         ...mixins.arObject,
@@ -141,13 +138,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.darkGrayTransparent,
         padding: 5
     },
-    button: {
-        ...mixins.arObject
-    },
     crosshairs: {
         ...mixins.arObject,
-        top: height / 2,
-        left: width / 2
+        backgroundColor: 'rgba(0,0,0,0)',
+        top: (height - variables.CROSSHAIRS_SIZE) / 2,
+        left: (width - variables.CROSSHAIRS_SIZE) / 2
     },
     preview: {
         position: 'absolute',

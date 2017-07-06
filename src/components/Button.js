@@ -27,7 +27,7 @@ export default function Button(props) {
                 styles.root,
                 {
                     backgroundColor: color,
-                    borderRadius: rounded ? 10 : 0
+                    borderRadius: rounded ? 4 : 0
                 },
                 style
             ]}
@@ -39,13 +39,10 @@ export default function Button(props) {
 
 const styles = StyleSheet.create({
     root: {
-        marginVertical: 8,
-        marginHorizontal: 30,
         ...mixins.row,
         ...mixins.center,
         paddingHorizontal: 8,
         paddingVertical: 5,
-        position: 'relative'
     },
     text: {
         color: colors.white

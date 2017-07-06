@@ -31,17 +31,15 @@ const store = compose(
 // components
 import Base from './Base';
 import ArGameDisplay from './ArGameDisplay';
+import LandingPage from './LandingPage';
 
 const styles = StyleSheet.create({
     root: {
         flex: 1
     },
     navBar: {
-        backgroundColor: colors.blue
+        backgroundColor: colors.transparent,
     },
-    white: {
-        color: 'white'
-    }
 });
 
 console.disableYellowBox = true;
@@ -69,16 +67,17 @@ class App extends Base {
                 <Scene
                     key='root'
                     sceneStyle={styles.root}
-                    navigationBarStyle={styles.navBar}
-                    titleStyle={styles.white}
-                    backButtonTextStyle={styles.white}
+                    hideNavBar
                 >
-                    <Scene
-                        key='ArGameDisplay'
-                        component={ArGameDisplay}
-                        title='DonaldSays'
-                        initial
-                    />
+                <Scene
+                    key='LandingPage'
+                    component={LandingPage}
+                    initial
+                />
+                <Scene
+                    key='ArGameDisplay'
+                    component={ArGameDisplay}
+                />
                 </Scene>
             </ReduxRouter>
         );
